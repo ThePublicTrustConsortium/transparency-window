@@ -1,0 +1,62 @@
+# SIGNED TREE HEADS - D-22 §3.
+#
+# APPEND ONLY. Each entry is a commitment, made at a moment, by a named key,
+# to the exact contents of the decision log at a given size. Entries are never
+# edited and never removed: a head that turned out to be wrong is corrected by
+# appending a later head, not by rewriting an earlier one. Editing an entry here
+# does not fix a mistake, it destroys the evidence of one.
+#
+# WHAT A SIGNATURE HERE CLAIMS. The log-operator key lives in this machine's TPM
+# behind Windows Hello and is non-exportable. Every signature below required a
+# live biometric gesture from the operator at the moment it was made. So an
+# entry claims: a person committed to this root, at this size, at this time.
+# It does NOT claim the decisions themselves are right, or that anyone else
+# has agreed - see countersignatures.
+#
+# COUNTERSIGNATURES are present from birth and honestly empty. External
+# overseers do not exist yet; the field is not a promise that they will, it is
+# the shape their agreement will take when they do. An empty list is the true
+# answer to "who else has vouched for this?" and D-22 §9 requires the true
+# answer rather than the flattering one.
+#
+# THE CANONICAL SIGNED BYTES, so a verifier can reimplement without this repo:
+#
+#     "PTC-STH-v1" LF {treeSize} LF {rootHash} LF {timestamp} LF {keyId} LF
+#
+# Five LF-terminated lines, INCLUDING THE LAST. treeSize decimal; rootHash and
+# keyId lowercase hex; timestamp ISO 8601 UTC seconds with a literal Z. keyId is
+# SHA-256 of the DER SubjectPublicKeyInfo in keys/ptc-log-operator-1.spki.pem.
+# Algorithm rsa2048-pkcs1v15-sha256: the signature is RSASSA-PKCS1-v1_5 over SHA-256 of
+# those bytes, so verification hashes the message itself - it is not a signature
+# over a pre-computed digest.
+#
+# Generated and appended by scripts/log/sign-head.mjs, which refuses to write an
+# entry whose signature it cannot verify locally first.
+
+- seq: 1
+  treeSize: 13
+  rootHash: 9a0afe8499b743ca294a9df548567722672a2078a2c3fd54043541a5f4be8a14
+  timestamp: '2026-08-17T02:19:39Z'
+  keyId: 5601583e53864da22a02f350a59fabb870f9b95cfa6cfab66da962e6bc1e85f7
+  algorithm: rsa2048-pkcs1v15-sha256
+  signature: >-
+    B8afEXKjY1zSzwLma6yobGenTFN+9BR4DcluX1kzxw4FTw+g/Yh4S1ieNf1Dxd567qj+nF2N0qVbjw0ezpBHH4T4MnqHj8lz3NjD92rHyZYJa7jfY6hSimRHLfkADH7vK+Zbn5wpL+xcZCGNhYV5Tjkg/3AQtrJxZJ0YgWxBwbwhDqQSdGfenzZSeCa/+ilgFanWnDGpz3twwUKhmJ5bJmQv40J52NRw5tUCeCFx1QBIK9Ii2mr0FHk/rMaJFVPGACMLHFK6+v4cR7LviJESumAIkV9+rb55sDhp0YMh3hBhyikYvH9+QTs41OJoHy744TLEkx8sxvh5Jp6K7eDLYg==
+  countersignatures: []
+- seq: 2
+  treeSize: 14
+  rootHash: 65c7bff2074af1f153cf3d1ae3200fa1e9b2f5ac317b64e96db3240af7904a2f
+  timestamp: '2026-08-17T02:44:25Z'
+  keyId: 5601583e53864da22a02f350a59fabb870f9b95cfa6cfab66da962e6bc1e85f7
+  algorithm: rsa2048-pkcs1v15-sha256
+  signature: >-
+    mSSnjmGHthrhdEjVRwoKo87/Lb4XWVzsEhrfiFcXhfgT9mCJThpLWs1lTcfoWd1Y/FIS/XlWFCRQHCFU0bAPrZhybL+s5ohNKNqPydWlMggsgD+b0UTBDHMtCEi5ulA2QpNgHOoJ8eUrvo2nxHHJr2lAPmFV8aFBl438eZIvjhOghIvQSPxe1t89pXVcyUcjbb5qaxVkOxOuVzeAfV4l2zXLpuaEvRjcKxfWEtgH2lI2sBUcsDKfBEtPeaO/qTO0TblQSyZA1G9veCUoTvKiGrEJajrJ5O5n6CoA2c9X23p3BoXQMp9hLcVhHNTf3H3KtEola0BVVhUM+qp36KptwA==
+  countersignatures: []
+- seq: 3
+  treeSize: 15
+  rootHash: f8ea143d0a61066fe0d2168dc08f0e46b0f75c7fe896ef25689dbe29488d8d7b
+  timestamp: '2026-08-17T03:39:14Z'
+  keyId: 5601583e53864da22a02f350a59fabb870f9b95cfa6cfab66da962e6bc1e85f7
+  algorithm: rsa2048-pkcs1v15-sha256
+  signature: >-
+    G+eBj7UgiiRYcFVTWblIWjw9tU8UVqpku/FJMS2kgaqB8KKWLZQ4qH3Cie8yniLa7hUZr2ougR5sA1h7kCK7ntCs1VzHlDKB4lXLDXp/tycJ5i+/ZSoUwOcYWS82FsyPiPQjHRgymaIr+PjKvCz2J3XpuqRhdbyiKDF2SDJjkIeTLuhH+Rf00auxarI+/r0QSQkNpwbceRe/DDuvhwZiF/d008Xq7RqasqhoWg1IwgOY1yiiXVD3paEGI5XuNxv/fG2IIFW/bnZx6QLOclIYWS0yXYfxNaU24ej0IOtI6nLrV8T8gwZVLlHT0qmn31dOQ9fuUIlfQ/XDINsgU4aKGg==
+  countersignatures: []

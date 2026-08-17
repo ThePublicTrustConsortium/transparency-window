@@ -1,0 +1,83 @@
+# EXTERNAL ANCHORS — D-22 §3, venue one: OpenTimestamps.
+#
+# Each signed tree head's digest is stamped into Bitcoin through the public
+# OpenTimestamps calendars. This is the first commitment the Consortium
+# publishes BEYOND ITS OWN CONTROL: the tree-heads register proves a key
+# committed to a root, but the Consortium holds that key and that file. A
+# Bitcoin block does not belong to the Consortium and cannot be quietly revised.
+#
+# THE ANCHORED DIGEST, so a verifier can reimplement without this repo:
+#
+#     digest = SHA-256( canonical_STH_bytes || raw_signature_bytes )
+#
+# where canonical_STH_bytes is the five-line PTC-STH-v1 serialization defined in
+# scripts/log/sth.mjs and raw_signature_bytes is the base64-DECODED signature
+# from the corresponding tree-heads.yaml entry. Concatenated in that order, no
+# separator. Both halves together timestamp exactly one claim: this key
+# committed to this tree, at this size.
+#
+# WHAT A PROOF ATTESTS. That the digest EXISTED BY the time of its Bitcoin
+# block. Nothing more. A timestamp cannot prove something did not exist earlier,
+# because anyone can stamp an old digest today. So an anchor is evidence against
+# BACK-dating and no evidence whatever against fore-dating.
+#
+# RETROACTIVE ANCHORS are marked `retroactive: true`. Their Bitcoin block is
+# much later than the head's own timestamp because the head was signed before
+# anchoring existed. Saying so is the D-22 §9 rule applied to ourselves: an
+# unmarked anchor would let a reader infer contemporaneous stamping that never
+# happened.
+#
+# STATUS LIFECYCLE.
+#   submitted  the calendars have the digest and returned a pending proof. This
+#              is a promise from the calendar operators, NOT yet a Bitcoin fact.
+#   attested   Bitcoin has confirmed it; bitcoinBlock names the block. Run
+#              scripts/log/upgrade-anchors.mjs to make this transition. It takes
+#              hours to a day — the calendars aggregate and commit periodically.
+#
+# Changing this register does NOT require a new signed tree head. check-sth
+# covers the decision log; anchor status is metadata ABOUT existing commitments,
+# not a new decision, and re-signing on every status flip would make the
+# signature meaningless.
+#
+# Generated and appended by scripts/log/anchor-head.mjs; upgraded in place by
+# scripts/log/upgrade-anchors.mjs.
+
+- seq: 1
+  digest: 637ba1f54b17a037f39d667244eb12cd039686ecf83d9b86c864b22f54fc10f2
+  calendars:
+    - https://a.pool.opentimestamps.org
+    - https://b.pool.opentimestamps.org
+    - https://a.pool.eternitywall.com
+    - https://ots.btc.catallaxy.com
+  status: submitted
+  submittedAt: '2026-08-17T02:44:42Z'
+  attestedAt: null
+  bitcoinBlock: null
+  retroactive: true
+  proof: anchors/ots/sth-0001.ots
+- seq: 2
+  digest: 6df350691686a51c7ed184e61a65fb1f5cc7f48043af7d829066de5eefa32007
+  calendars:
+    - https://a.pool.opentimestamps.org
+    - https://b.pool.opentimestamps.org
+    - https://a.pool.eternitywall.com
+    - https://ots.btc.catallaxy.com
+  status: submitted
+  submittedAt: '2026-08-17T02:44:43Z'
+  attestedAt: null
+  bitcoinBlock: null
+  retroactive: false
+  proof: anchors/ots/sth-0002.ots
+- seq: 3
+  digest: 1192a13ea94511f77270edcbfcc4b89a493e9603f6f365394a94b67e3b1aa618
+  calendars:
+    - https://a.pool.opentimestamps.org
+    - https://b.pool.opentimestamps.org
+    - https://a.pool.eternitywall.com
+    - https://ots.btc.catallaxy.com
+  status: submitted
+  submittedAt: '2026-08-17T03:39:35Z'
+  attestedAt: null
+  bitcoinBlock: null
+  retroactive: false
+  proof: anchors/ots/sth-0003.ots
