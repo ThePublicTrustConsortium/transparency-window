@@ -81,20 +81,29 @@ tree at this size.
 
 ## Verify it yourself
 
-Requires Node 18+ and `js-yaml`. No network, no trust in us.
+Requires Node 18+ and `js-yaml` (either 4.x or 5.x). No network, no trust in us.
+
+```sh
+npm install js-yaml
+node verify.mjs
+```
+
+Note the **named** import below. js-yaml 5 ships an ESM build with named exports
+and no default, so a default import fails there while working on 4.x — this
+snippet uses `import { load }`, which runs on both.
 
 ```js
 // verify.mjs — run: node verify.mjs
 import { readFileSync } from 'node:fs'
 import crypto from 'node:crypto'
-import yaml from 'js-yaml'
+import { load } from 'js-yaml'
 
 const pem = readFileSync('keys/ptc-log-operator-1.spki.pem', 'utf8')
 const key = crypto.createPublicKey(pem)
 const der = Buffer.from(pem.replace(/-----[A-Z ]+-----/g, '').replace(/\s+/g, ''), 'base64')
 const keyId = crypto.createHash('sha256').update(der).digest('hex')
 
-const heads = yaml.load(readFileSync('tree-heads.yaml', 'utf8'))
+const heads = load(readFileSync('tree-heads.yaml', 'utf8'))
 let previous = 0
 let failures = 0
 
