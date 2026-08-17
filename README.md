@@ -11,7 +11,7 @@ What the log actually says is a separate decision, not yet taken.
 
 This repository is generated. It is written by `scripts/log/publish-transparency.mjs`
 in the Consortium's working repository and carries nothing but signed heads,
-anchor proofs, the operator's public key, and this file.
+anchor proofs, consistency proofs, the operator's public key, and this file.
 
 ---
 
@@ -28,6 +28,10 @@ using only the files in this repository.
    rather than a proof — the register says which is which and never blurs them.
 3. **That tree sizes increase monotonically** across `seq`, so the log is not
    shrinking.
+4. **That the log is genuinely append-only** — that the tree at each head is a
+   PREFIX of the next, with no leaf moved, removed or edited. `consistency-proofs.yaml`
+   carries an RFC 6962 consistency proof for every adjacent pair, and the snippet
+   below checks the whole chain from the published roots alone.
 
 ## What you CANNOT verify from this repository alone
 
@@ -37,16 +41,17 @@ marketing.
 - **What the tree contains.** These are hashes and signatures over a decision
   log you cannot read here. A head proves commitment, not content, and certainly
   not that the decisions are good ones.
-- **Cryptographic append-only consistency between heads.** Nothing here proves
-  that the tree at size 15 *contains* the tree at size 13 — only that both were
-  signed by the same key. RFC 6962 consistency proofs are **planned and not
-  present**. Until they ship, "append-only" is a claim backed by process, not by
-  mathematics you can check.
 - **That the calendar servers are honest**, for `submitted` anchors. Only a
   Bitcoin attestation settles that, and it takes hours to a day.
 - **Anything about who holds the key.** The key lives in a hardware module and
   every signature required a human gesture, but this repository cannot prove that
   to you — it is a claim about our operating practice.
+- **That anyone outside the Consortium has checked any of this.** Every head
+  carries `countersignatures: []`. The machinery for external overseers is built
+  and verified on every run; **no seat is filled**. Consistency proofs show we did
+  not rewrite history *in this published sequence* — they cannot show that the
+  sequence you are reading is the one everyone else was given. Only an independent
+  witness closes that, and there is not one yet.
 
 ---
 
@@ -127,7 +132,62 @@ for (const h of heads) {
     `monotonic ${grew ? 'OK' : 'FAIL'}`,
   )
 }
-console.log(failures === 0 ? '\nALL HEADS VERIFIED' : `\n${failures} HEAD(S) FAILED`)
+
+// ---- append-only: RFC 6962 consistency proofs -----------------------------
+// Rebuilds BOTH roots from the proof's node list, using only published roots and
+// hashes. The decision log is not needed here and is not published.
+const sha = (b) => crypto.createHash('sha256').update(b).digest()
+const nodeHash = (l, r) => sha(Buffer.concat([Buffer.from([0x01]), l, r]))
+
+function verifyConsistency(m, n, rootM, rootN, proof) {
+  if (m > n) return false
+  if (m === n) return proof.length === 0 && rootM.equals(rootN)
+  if (m === 0) return proof.length === 0
+  if (proof.length === 0) return false
+
+  let i = 0, n1, n2
+  let p = m - 1, last = n - 1
+  while (p % 2 === 1) { p = Math.floor(p / 2); last = Math.floor(last / 2) }
+
+  if (p > 0) { n1 = proof[i]; n2 = proof[i]; i++ } else { n1 = rootM; n2 = rootM }
+
+  while (p > 0) {
+    if (i >= proof.length) return false
+    if (p % 2 === 1) { n1 = nodeHash(proof[i], n1); n2 = nodeHash(proof[i], n2); i++ }
+    else if (p < last) { n2 = nodeHash(n2, proof[i]); i++ }
+    p = Math.floor(p / 2); last = Math.floor(last / 2)
+  }
+  while (last > 0) {
+    if (i >= proof.length) return false
+    n2 = nodeHash(n2, proof[i]); i++; last = Math.floor(last / 2)
+  }
+  return i === proof.length && n1.equals(rootM) && n2.equals(rootN)
+}
+
+const proofs = load(readFileSync('consistency-proofs.yaml', 'utf8'))
+for (let j = 0; j < heads.length - 1; j++) {
+  const from = heads[j], to = heads[j + 1]
+  const row = proofs.find((r) => r.fromSeq === from.seq && r.toSeq === to.seq)
+  const ok = !!row &&
+    row.fromSize === from.treeSize && row.toSize === to.treeSize &&
+    verifyConsistency(
+      row.fromSize, row.toSize,
+      Buffer.from(from.rootHash, 'hex'), Buffer.from(to.rootHash, 'hex'),
+      row.proof.map((h) => Buffer.from(h, 'hex')),
+    )
+  if (!ok) failures++
+  console.log(
+    `seq ${from.seq}->${to.seq}  ${from.treeSize}->${to.treeSize} leaves  ` +
+    `append-only ${ok ? 'PROVEN' : 'FAILED'}`,
+  )
+}
+
+// ---- who else has vouched -------------------------------------------------
+const witnesses = heads.reduce((acc, h) => acc + (h.countersignatures?.length ?? 0), 0)
+console.log(`\ncountersignatures: ${witnesses}` +
+  (witnesses === 0 ? '  - nobody outside the Consortium has vouched for this log' : ''))
+
+console.log(failures === 0 ? '\nALL CHECKS PASSED' : `\n${failures} CHECK(S) FAILED`)
 process.exit(failures === 0 ? 0 : 1)
 ```
 
@@ -143,6 +203,7 @@ the `digest` field recorded in `anchors.yaml`.
 |---|---|
 | `tree-heads.yaml` | Every signed tree head, append-only, oldest first |
 | `anchors.yaml` | One anchor per head: digest, calendars, status, Bitcoin block |
+| `consistency-proofs.yaml` | RFC 6962 consistency proof for every adjacent head pair |
 | `anchors/ots/sth-NNNN.ots` | Detached OpenTimestamps proof for head `NNNN` |
 | `keys/ptc-log-operator-1.spki.pem` | The operator's public key. Public only — the private key is non-exportable and exists solely inside a hardware module |
 

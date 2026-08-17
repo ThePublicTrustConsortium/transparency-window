@@ -19,6 +19,25 @@
 # answer to "who else has vouched for this?" and D-22 §9 requires the true
 # answer rather than the flattering one.
 #
+# THE COUNTERSIGNATURE FORMAT, defined now so a seat can be filled without
+# renegotiating the schema:
+#
+#     - keyId:      lowercase hex SHA-256 of the overseer's DER SPKI
+#       algorithm:  e.g. rsa2048-pkcs1v15-sha256 or ecdsa-p256-sha256
+#       signature:  base64, over THE IDENTICAL canonical STH bytes the operator
+#                   signed — the same five-line PTC-STH-v1 serialization, not a
+#                   re-encoding, so one definition serves both roles
+#       timestamp:  ISO 8601 UTC seconds, when the overseer signed
+#       overseer:   the seat's name as admitted to the record
+#
+# Countersigning the SAME BYTES is what makes the two signatures comparable: an
+# overseer who signed a different serialization would be vouching for a different
+# statement, and the difference would be invisible in a list of base64.
+#
+# An overseer key is admitted by a decision-log entry, never by appearing in a
+# directory — see keys/overseers/README.md. The seat is filled on the record or
+# it is not filled.
+#
 # THE CANONICAL SIGNED BYTES, so a verifier can reimplement without this repo:
 #
 #     "PTC-STH-v1" LF {treeSize} LF {rootHash} LF {timestamp} LF {keyId} LF
@@ -59,4 +78,13 @@
   algorithm: rsa2048-pkcs1v15-sha256
   signature: >-
     G+eBj7UgiiRYcFVTWblIWjw9tU8UVqpku/FJMS2kgaqB8KKWLZQ4qH3Cie8yniLa7hUZr2ougR5sA1h7kCK7ntCs1VzHlDKB4lXLDXp/tycJ5i+/ZSoUwOcYWS82FsyPiPQjHRgymaIr+PjKvCz2J3XpuqRhdbyiKDF2SDJjkIeTLuhH+Rf00auxarI+/r0QSQkNpwbceRe/DDuvhwZiF/d008Xq7RqasqhoWg1IwgOY1yiiXVD3paEGI5XuNxv/fG2IIFW/bnZx6QLOclIYWS0yXYfxNaU24ej0IOtI6nLrV8T8gwZVLlHT0qmn31dOQ9fuUIlfQ/XDINsgU4aKGg==
+  countersignatures: []
+- seq: 4
+  treeSize: 17
+  rootHash: f3d36301518740c59b17b63d1f62ead1412e13feef2ec3faecbfe1ea470b8722
+  timestamp: '2026-08-17T04:06:51Z'
+  keyId: 5601583e53864da22a02f350a59fabb870f9b95cfa6cfab66da962e6bc1e85f7
+  algorithm: rsa2048-pkcs1v15-sha256
+  signature: >-
+    0SY3i2ITATMgDLferfPBvmDg7GNJcXtm1N0J2JPqOZqm2kHjDuSGcTrewUfj+srGULLDiGoanJzQmYth+bdsSZu50rGRj+nj4mYG5t62fVgMSqjZBH62KiCKA14aDQoi8tcz9TnPRS9SQ68EmaQiUPdWWsdZcFn0eVSnr7zzwLcZgZ5Ypjyk1nR2OJKUU0doGfPdTvB0eRBd+p+VM5WoswIE5nBEQq1b8NWEmLysBP/xzSan+LnhSBPWBdaKbiEacZ1+NsfbViHvhi2QRzeTdXcwT2iw4LzjHB6eDjsagvM0kS4qiwySmI7H6jEtfS6qV4Q/N27Omz3QajkFGPgQMg==
   countersignatures: []
