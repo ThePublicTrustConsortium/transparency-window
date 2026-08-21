@@ -150,3 +150,16 @@
   bitcoinBlock: null
   retroactive: false
   proof: anchors/ots/sth-0008.ots
+- seq: 9
+  digest: 1b4b037cf6fb18fa9cb232f018079626433826912e89f4408b28c953bc46145b
+  calendars:
+    - https://a.pool.opentimestamps.org
+    - https://b.pool.opentimestamps.org
+    - https://a.pool.eternitywall.com
+    - https://ots.btc.catallaxy.com
+  status: submitted
+  submittedAt: '2026-08-21T19:25:24Z'
+  attestedAt: null
+  bitcoinBlock: null
+  retroactive: false
+  proof: anchors/ots/sth-0009.ots
