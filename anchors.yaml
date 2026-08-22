@@ -41,7 +41,6 @@
 #
 # Generated and appended by scripts/log/anchor-head.mjs; upgraded in place by
 # scripts/log/upgrade-anchors.mjs.
-
 - seq: 1
   digest: 637ba1f54b17a037f39d667244eb12cd039686ecf83d9b86c864b22f54fc10f2
   calendars:
@@ -79,10 +78,12 @@
     - https://b.pool.opentimestamps.org
     - https://a.pool.eternitywall.com
     - https://ots.btc.catallaxy.com
-  status: submitted
+  status: attested
   submittedAt: '2026-08-17T03:39:35Z'
-  attestedAt: null
-  bitcoinBlock: null
+  attestedAt: '2026-08-22T17:00:32Z'
+  bitcoinBlock:
+    height: 962830
+    hash: null
   retroactive: false
   proof: anchors/ots/sth-0003.ots
 - seq: 4
@@ -92,10 +93,12 @@
     - https://b.pool.opentimestamps.org
     - https://a.pool.eternitywall.com
     - https://ots.btc.catallaxy.com
-  status: submitted
+  status: attested
   submittedAt: '2026-08-17T04:15:27Z'
-  attestedAt: null
-  bitcoinBlock: null
+  attestedAt: '2026-08-22T17:00:32Z'
+  bitcoinBlock:
+    height: 962833
+    hash: null
   retroactive: false
   proof: anchors/ots/sth-0004.ots
 - seq: 5
@@ -105,10 +108,12 @@
     - https://b.pool.opentimestamps.org
     - https://a.pool.eternitywall.com
     - https://ots.btc.catallaxy.com
-  status: submitted
+  status: attested
   submittedAt: '2026-08-17T12:05:11Z'
-  attestedAt: null
-  bitcoinBlock: null
+  attestedAt: '2026-08-22T17:00:32Z'
+  bitcoinBlock:
+    height: 962887
+    hash: null
   retroactive: false
   proof: anchors/ots/sth-0005.ots
 - seq: 6
@@ -118,10 +123,12 @@
     - https://b.pool.opentimestamps.org
     - https://a.pool.eternitywall.com
     - https://ots.btc.catallaxy.com
-  status: submitted
+  status: attested
   submittedAt: '2026-08-17T13:12:05Z'
-  attestedAt: null
-  bitcoinBlock: null
+  attestedAt: '2026-08-22T17:00:33Z'
+  bitcoinBlock:
+    height: 962896
+    hash: null
   retroactive: false
   proof: anchors/ots/sth-0006.ots
 - seq: 7
@@ -131,10 +138,12 @@
     - https://b.pool.opentimestamps.org
     - https://a.pool.eternitywall.com
     - https://ots.btc.catallaxy.com
-  status: submitted
+  status: attested
   submittedAt: '2026-08-17T14:26:40Z'
-  attestedAt: null
-  bitcoinBlock: null
+  attestedAt: '2026-08-22T17:00:33Z'
+  bitcoinBlock:
+    height: 962904
+    hash: null
   retroactive: false
   proof: anchors/ots/sth-0007.ots
 - seq: 8
@@ -144,10 +153,12 @@
     - https://b.pool.opentimestamps.org
     - https://a.pool.eternitywall.com
     - https://ots.btc.catallaxy.com
-  status: submitted
+  status: attested
   submittedAt: '2026-08-17T15:47:55Z'
-  attestedAt: null
-  bitcoinBlock: null
+  attestedAt: '2026-08-22T17:00:33Z'
+  bitcoinBlock:
+    height: 962911
+    hash: null
   retroactive: false
   proof: anchors/ots/sth-0008.ots
 - seq: 9
@@ -157,10 +168,12 @@
     - https://b.pool.opentimestamps.org
     - https://a.pool.eternitywall.com
     - https://ots.btc.catallaxy.com
-  status: submitted
+  status: attested
   submittedAt: '2026-08-21T19:25:24Z'
-  attestedAt: null
-  bitcoinBlock: null
+  attestedAt: '2026-08-22T17:00:33Z'
+  bitcoinBlock:
+    height: 963480
+    hash: null
   retroactive: false
   proof: anchors/ots/sth-0009.ots
 - seq: 10
