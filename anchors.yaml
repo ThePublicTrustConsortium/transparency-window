@@ -41,6 +41,7 @@
 #
 # Generated and appended by scripts/log/anchor-head.mjs; upgraded in place by
 # scripts/log/upgrade-anchors.mjs.
+
 - seq: 1
   digest: 637ba1f54b17a037f39d667244eb12cd039686ecf83d9b86c864b22f54fc10f2
   calendars:
@@ -189,3 +190,16 @@
   bitcoinBlock: null
   retroactive: false
   proof: anchors/ots/sth-0010.ots
+- seq: 11
+  digest: 2fc36ec8f77b4bb7a7b92dec5285f5eb7d1ea1b4d3718d894fd23406c3e6860e
+  calendars:
+    - https://a.pool.opentimestamps.org
+    - https://b.pool.opentimestamps.org
+    - https://a.pool.eternitywall.com
+    - https://ots.btc.catallaxy.com
+  status: submitted
+  submittedAt: '2026-08-26T18:17:24Z'
+  attestedAt: null
+  bitcoinBlock: null
+  retroactive: false
+  proof: anchors/ots/sth-0011.ots
