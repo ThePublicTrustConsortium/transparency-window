@@ -151,3 +151,12 @@
   signature: >-
     z3iXtgeYgVgellpV18P60IEMd/ezNau+hYtiP9KpPuU7dSk51rBkAchypdmLbVhnKBLwAIHxfoSy8fupxG2f6ZMHa0rNkMngi0lJcmYhxBjDfNZ4nqeQT7tRzmMeXk5LQIe5E4zUVpOdJSwCccxTf7W0xIb8seobOFcyBhvuuQyA4nZJmL7BQlUSU6VZBgGmz22aUBfPQqRjFP7CEYs96Npncwa1PebRXHyLHJxKry7xTnwzeEyGq/mMX5G5MUYa5dji6EVzWvObVe30frr/za2NPZlLUJSlhKqZs0g7qcj8RA4F0gzcSW/USHFkcBLCinrU+pE/ewVvF6dQR3L6oQ==
   countersignatures: []
+- seq: 12
+  treeSize: 27
+  rootHash: c8f0dffe96506a19b7b73f596e6143c505315f91cb6877a9570487bdacaf6fbd
+  timestamp: '2026-08-27T00:00:13Z'
+  keyId: 5601583e53864da22a02f350a59fabb870f9b95cfa6cfab66da962e6bc1e85f7
+  algorithm: rsa2048-pkcs1v15-sha256
+  signature: >-
+    m2mgCGlFqBG1DjXfSK1XxU/tmszhGWPNCh3mL9wUk7XAE2F3DNLXGrQotLlTY39TiA3kOPJFJyINA1BN59k1UHCx3HthAc8Jtjk37RaToyD7ymG+k9dvvrx/YdGHctlCZ5hWIwkutHr7wgyorxjk4nO8G1mPh2rfbmxU2s3gPF+fBF/mluVYoW0r8HAr1dg6KDQ4R3EjJY0eyztpl1QT1QRlAz/dsAm13x5CTIONcp9mwQGy+Yaf3ivFZYcJ6c5QowVzI6TAaXSagas5lVn4uC477N7O+Hy/RBq991HZaJioR0XhU4aipKqaYEgWmvdyNCMY79rYYYd5MjJ6EPMWvg==
+  countersignatures: []
