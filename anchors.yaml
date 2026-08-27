@@ -213,9 +213,11 @@
     - https://b.pool.opentimestamps.org
     - https://a.pool.eternitywall.com
     - https://ots.btc.catallaxy.com
-  status: submitted
+  status: attested
   submittedAt: '2026-08-27T00:00:54Z'
-  attestedAt: null
-  bitcoinBlock: null
+  attestedAt: '2026-08-27T13:23:59Z'
+  bitcoinBlock:
+    height: 964221
+    hash: null
   retroactive: false
   proof: anchors/ots/sth-0012.ots
